@@ -1,5 +1,5 @@
 <div align="center">
-    ![s'more](./assets/smore-logo.svg)
+    ![s'more](https://raw.githubusercontent.com/smore-tools/smore/master/assets/smore-logo.svg?sanitize=true)
 </div>
 <h3 align="center">Gooey GUI Goodness</h3>
 <p align="center">A modular Web Component library full of micro-interactions and UX utilities</p>
