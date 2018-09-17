@@ -1,5 +1,6 @@
 import { Component } from '@stencil/core';
 
+
 @Component({
 	tag: 'smore-window',
 	styleUrl: 'window.css',
