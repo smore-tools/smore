@@ -1,0 +1,11 @@
+{
+  "name": "@smore/source",
+  "version": "0.0.1",
+  "description": "S'more monorepo containing build scripts",
+  "private": true,
+  "scripts": {
+    "build": "node .scripts/build.js",
+    "prepare": "node .scripts/prepare.js",
+    "release": "node .scripts/release.js"
+  }
+}

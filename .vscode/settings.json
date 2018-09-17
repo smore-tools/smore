@@ -1,0 +1,5 @@
+{
+    "stencilTools.test.create": false,
+    "stencilTools.component.shadow": true,
+    "stencilTools.component.prefix": "smore"
+}

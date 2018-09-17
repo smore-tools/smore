@@ -1,5 +1,5 @@
 <div align="center">
-    <img src="/assets/smore-logo.svg?sanitize=true" alt="s'more"/>
+    <img src="/.github/assets/smore-logo.svg?sanitize=true" alt="s'more"/>
 </div>
 <h3 align="center">Gooey GUI Goodness</h3>
 <p align="center">A modular Web Component library full of micro-interactions and UX utilities</p>
