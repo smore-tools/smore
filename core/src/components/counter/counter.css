@@ -1,3 +1,10 @@
 :host {
-    /* Component styles go here */
+    display: block;
+
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+
+    font-feature-settings: "tnum";
+    font-variant-numeric: tabular-nums;
 }
