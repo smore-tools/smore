@@ -29,33 +29,169 @@ declare global {
 declare global {
 
   namespace StencilComponents {
-    interface MyComponent {
-      'first': string;
-      'last': string;
+    interface SmoreAsyncContent {
+
     }
   }
 
-  interface HTMLMyComponentElement extends StencilComponents.MyComponent, HTMLStencilElement {}
+  interface HTMLSmoreAsyncContentElement extends StencilComponents.SmoreAsyncContent, HTMLStencilElement {}
 
-  var HTMLMyComponentElement: {
-    prototype: HTMLMyComponentElement;
-    new (): HTMLMyComponentElement;
+  var HTMLSmoreAsyncContentElement: {
+    prototype: HTMLSmoreAsyncContentElement;
+    new (): HTMLSmoreAsyncContentElement;
   };
   interface HTMLElementTagNameMap {
-    'my-component': HTMLMyComponentElement;
+    'smore-async-content': HTMLSmoreAsyncContentElement;
   }
   interface ElementTagNameMap {
-    'my-component': HTMLMyComponentElement;
+    'smore-async-content': HTMLSmoreAsyncContentElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      'my-component': JSXElements.MyComponentAttributes;
+      'smore-async-content': JSXElements.SmoreAsyncContentAttributes;
     }
   }
   namespace JSXElements {
-    export interface MyComponentAttributes extends HTMLAttributes {
-      'first'?: string;
-      'last'?: string;
+    export interface SmoreAsyncContentAttributes extends HTMLAttributes {
+
+    }
+  }
+}
+
+
+declare global {
+
+  namespace StencilComponents {
+    interface SmoreCounter {
+      'animation': string;
+      'end': () => void;
+      'from': number;
+      'start': () => void;
+      'to': number;
+    }
+  }
+
+  interface HTMLSmoreCounterElement extends StencilComponents.SmoreCounter, HTMLStencilElement {}
+
+  var HTMLSmoreCounterElement: {
+    prototype: HTMLSmoreCounterElement;
+    new (): HTMLSmoreCounterElement;
+  };
+  interface HTMLElementTagNameMap {
+    'smore-counter': HTMLSmoreCounterElement;
+  }
+  interface ElementTagNameMap {
+    'smore-counter': HTMLSmoreCounterElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      'smore-counter': JSXElements.SmoreCounterAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface SmoreCounterAttributes extends HTMLAttributes {
+      'animation'?: string;
+      'from'?: number;
+      'to'?: number;
+    }
+  }
+}
+
+
+declare global {
+
+  namespace StencilComponents {
+    interface SmoreMotionPath {
+
+    }
+  }
+
+  interface HTMLSmoreMotionPathElement extends StencilComponents.SmoreMotionPath, HTMLStencilElement {}
+
+  var HTMLSmoreMotionPathElement: {
+    prototype: HTMLSmoreMotionPathElement;
+    new (): HTMLSmoreMotionPathElement;
+  };
+  interface HTMLElementTagNameMap {
+    'smore-motion-path': HTMLSmoreMotionPathElement;
+  }
+  interface ElementTagNameMap {
+    'smore-motion-path': HTMLSmoreMotionPathElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      'smore-motion-path': JSXElements.SmoreMotionPathAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface SmoreMotionPathAttributes extends HTMLAttributes {
+
+    }
+  }
+}
+
+
+declare global {
+
+  namespace StencilComponents {
+    interface SmoreTypewriter {
+
+    }
+  }
+
+  interface HTMLSmoreTypewriterElement extends StencilComponents.SmoreTypewriter, HTMLStencilElement {}
+
+  var HTMLSmoreTypewriterElement: {
+    prototype: HTMLSmoreTypewriterElement;
+    new (): HTMLSmoreTypewriterElement;
+  };
+  interface HTMLElementTagNameMap {
+    'smore-typewriter': HTMLSmoreTypewriterElement;
+  }
+  interface ElementTagNameMap {
+    'smore-typewriter': HTMLSmoreTypewriterElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      'smore-typewriter': JSXElements.SmoreTypewriterAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface SmoreTypewriterAttributes extends HTMLAttributes {
+
+    }
+  }
+}
+
+
+declare global {
+
+  namespace StencilComponents {
+    interface SmoreWindow {
+
+    }
+  }
+
+  interface HTMLSmoreWindowElement extends StencilComponents.SmoreWindow, HTMLStencilElement {}
+
+  var HTMLSmoreWindowElement: {
+    prototype: HTMLSmoreWindowElement;
+    new (): HTMLSmoreWindowElement;
+  };
+  interface HTMLElementTagNameMap {
+    'smore-window': HTMLSmoreWindowElement;
+  }
+  interface ElementTagNameMap {
+    'smore-window': HTMLSmoreWindowElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      'smore-window': JSXElements.SmoreWindowAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface SmoreWindowAttributes extends HTMLAttributes {
+
     }
   }
 }

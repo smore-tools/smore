@@ -6,8 +6,9 @@ export const config: Config = {
   bundles: [
     { components: ['smore-async-content'] },
     { components: ['smore-counter'] },
+    { components: ['smore-motion-path'] },
     { components: ['smore-typewriter'] },
-    { components: ['smore-window'] }
+    { components: ['smore-window'] },
   ],
   plugins: [
     sass()

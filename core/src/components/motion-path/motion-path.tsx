@@ -8,8 +8,6 @@ import { Component } from '@stencil/core';
 })
 export class MotionPath {
 
-    
-
     render() {
         return (
             <div>
