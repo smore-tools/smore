@@ -1,18 +1,17 @@
 import { Component } from '@stencil/core';
 
-
 @Component({
-    tag: 'smore-window',
-    styleUrl: 'window.css',
-    shadow: true
+	tag: 'smore-window',
+	styleUrl: 'window.css',
+	shadow: true
 })
 export class Window {
 
-    render() {
-        return (
-            <div>
-                <p>Hello Window!</p>
-            </div>
-        );
-    }
+	render() {
+		return (
+			<div>
+				<p>Hello Window!</p>
+			</div>
+		);
+	}
 }
