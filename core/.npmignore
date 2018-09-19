@@ -1,0 +1,7 @@
+src/
+www/
+scripts/
+.stencil/
+package-lock.json
+stencil.config.ts
+tsconfig.ts
