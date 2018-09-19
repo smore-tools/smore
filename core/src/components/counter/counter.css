@@ -1,10 +1,33 @@
 :host {
-    display: block;
+    display: inline-block;
+    animation: 3.5s 500ms forwards 1 cubic-bezier(0.23, 1, 0.320, 1);
+    animation-play-state: running;
+}
 
-    font-family: inherit;
-    font-size: inherit;
-    font-weight: inherit;
+:host(.is-paused) {
+    animation-play-state: paused !important;
+}
 
-    font-feature-settings: "tnum";
-    font-variant-numeric: tabular-nums;
+.proxy {
+    z-index: -1;
+    opacity: 0;
+    visibility: hidden;
+    animation: inherit;
+    animation-delay: inherit;
+    animation-direction: inherit;
+    animation-duration: inherit;
+    animation-fill-mode: inherit;
+    animation-iteration-count: inherit;
+    animation-play-state: inherit;
+    animation-timing-function: inherit;
+    animation-name: count;
+}
+
+@keyframes count {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }

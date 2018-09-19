@@ -9,12 +9,26 @@
 
     <link href="/build/smore.css" rel="stylesheet">
     <script src="/build/smore.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Space+Mono" rel="stylesheet">
+
+    <style>
+        html {
+            font-family: 'Space Mono', monospace;
+            width: 100vw;
+        }
+        main {
+            padding-top: 100vh;
+            min-height: 100vh;
+            max-width: 100vw;
+        }
+    </style>
 </head>
 
 <body>
 
-    <smore-counter animation="5s cubic-bezier(0.165, 0.84, 0.44, 1)">100</smore-counter>
-    <smore-counter animation="5s cubic-bezier(0.165, 0.84, 0.44, 1)">999</smore-counter>
+    <main>
+        <h1><smore-counter>$19.99</smore-counter></h1>
+    </main>
 
 </body>
 

@@ -63,11 +63,8 @@ declare global {
 
   namespace StencilComponents {
     interface SmoreCounter {
-      'animation': string;
-      'end': () => void;
-      'from': number;
-      'start': () => void;
-      'to': number;
+      'from': string;
+      'pad': string;
     }
   }
 
@@ -90,9 +87,10 @@ declare global {
   }
   namespace JSXElements {
     export interface SmoreCounterAttributes extends HTMLAttributes {
-      'animation'?: string;
-      'from'?: number;
-      'to'?: number;
+      'from'?: string;
+      'onSmoreAnimationEnd'?: (event: CustomEvent<void>) => void;
+      'onSmoreAnimationStart'?: (event: CustomEvent<void>) => void;
+      'pad'?: string;
     }
   }
 }

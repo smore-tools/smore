@@ -1,163 +1,149 @@
-import { Component, Prop, State, Watch, Element, Method } from '@stencil/core';
-import { toNum } from '../../utils';
-import { AnimationProperties, parse } from '../../utils/animation';
-import BezierEasing from 'bezier-easing';
+import { Component, Element, State, Event, EventEmitter, Prop, Watch } from '@stencil/core';
+import { parseInput } from './utils';
+import { commas } from '../../utils';
 
 
 @Component({
-	tag: 'smore-counter',
-	styleUrl: 'counter.css',
-	shadow: true
+    tag: 'smore-counter',
+    styleUrl: 'counter.css',
+    shadow: true
 })
-export class Counter {
+export class MoCounter {
 
-	private io?: IntersectionObserver;
+    private io: IntersectionObserver;
 
-	@Element() el!: HTMLElement;
+    @Element() el: HTMLElement;
+    private proxy: Element;
 
-	@State() _animation: AnimationProperties;
-	@State() _decimals = 0;
-	@State() value: number;
-	@State() progress = 0;
+    @State() ended: boolean = false;
+    @State() intersecting: boolean = false;
+    @State() _pad: boolean = false;
+    @State() _from: number = 0;
+    @State() _to: number = 0;
+    
+    @State() progress = 0;
+    @State() timers: any[] = [];
 
-	@Prop({ mutable: true }) from: number = 0;
-	@Watch('from')
-	fromChanged() {
-		this.from = toNum(this.from);
-	}
+    @State() prefix: string;
+    @State() suffix: string;
+    @State() decimals: number;
+    @State() commas: boolean;
 
-	@Prop({ mutable: true }) to: number;
-	@Watch('to')
-	toChanged() {
-		this.to = toNum(this.to);
-	}
+    @Event() smoreAnimationStart: EventEmitter<void>;
+    @Event() smoreAnimationEnd: EventEmitter<void>;
 
-	@Prop() animation: string;
-	@Watch('animation')
-	animationChanged() {
-		this._animation = parse(this.animation);
-		const { direction } = this._animation;
-		if (direction === 'alternate-reverse' || direction === 'reverse') {
-			const { from, to } = this;
-			this.to = from;
-			this.from = to;
-		}
-		console.log(this._animation);
-	}
+    @Prop() pad: string;
+    @Watch('pad')
+    padChanged() {
+        if (this.pad === undefined) this._pad = false;
+        else if (this.pad === '' || this.pad === 'true') this._pad = true;
+    }
 
-	componentDidLoad() {
-		this.animationChanged();
-		this.fromChanged();
-		this.toChanged();
-		this.addIO();
-		let value = this.el.textContent.trim();
-		const splt = value.split('.')
-		if (splt.length === 1) {
-			this.to = toNum(value);
-		} else {
-			this._decimals = splt[1].length;
-			this.to = toNum(value);
-		}
-		this.value = this.from;
-	}
+    @Prop() from: string = "0";
+    @Watch('from')
+    fromChanged() {
+        const { value } = parseInput(this.from.trim());
+        this._from = value;
+    }
 
-	@Method()
-	start() {
-		if (this._animation.playState === 'running') {
-			const timeout = setTimeout(() => {
-				clearTimeout(timeout);
-				this.count();
-			}, this._animation.delay)
-	
-			setTimeout(() => {
-				console.log(`Finish in ${this._animation.duration}, ${this.progress}`);
-			}, this._animation.duration);
-		}
-	}
+    componentDidLoad() {
+        this.padChanged();
+        this.fromChanged();
+        this.proxy = (this.el.shadowRoot || this.el).querySelector('.proxy');
+        
+        this.addIO();
+        const { prefix, value, suffix, decimals, commas } = parseInput(this.el.textContent.trim());
+        this.prefix = prefix;
+        this.suffix = suffix;
+        this.decimals = decimals;
+        this.commas = commas;
+        
+        this._to = value;
 
-	@Method()
-	end() {
-		const { fillMode } = this._animation;
-		switch (fillMode) {
-			case 'backwards':
-				this.progress = 0;
-				break;
-			case 'forwards':
-				this.progress = 1;
-				break;
-			case 'both':
-				this.progress = 1;
-				break;
-			default:
-				this.progress = 1;
-				break;
-		}
-		console.timeEnd(`${this.to}`);
-	}
+        this.proxy.addEventListener('animationstart', () => {
+            this.onStart();
+            this.smoreAnimationStart.emit();
+        });
+        this.proxy.addEventListener('animationend', () => {
+            this.ended = true;
+            this.onEnd();
+            this.smoreAnimationEnd.emit();
+        });
+    }
 
-	private addIO() {
-		if ('IntersectionObserver' in window) {
-			this.removeIO();
-			this.io = new IntersectionObserver(data => {
-				if (data[0].isIntersecting) {
-					this.start();
-					this.removeIO();
-				}
-			});
-			this.io.observe(this.el);
-		} else {
-			setTimeout(() => { }, 200);
-		}
-	}
+    private addIO() {
+        if ('IntersectionObserver' in window) {
+            this.removeIO();
+            this.io = new IntersectionObserver(([el]) => {
+                this.intersecting = el.isIntersecting;
+                if (this.intersecting) {
+                    this.onStart();
+                } else {
+                    this.onEnd();
+                }
+            });
+            this.io.observe(this.el);
+        }
+    }
 
-	private removeIO() {
-		if (this.io) {
-			this.io.disconnect();
-			this.io = undefined;
-		}
-	}
+    private removeIO() {
+        if (this.io) {
+            this.io.disconnect();
+            this.io = undefined;
+        }
+    }
 
-	private format() {
-		if (this.value) {
-			const value = this.from + (this.value * (this.to - this.from));
-			return value.toFixed(this._decimals);
-		} else {
-			return this.from.toFixed(this._decimals);
-		}
-	}
+    private onStart() {
 
-	private getEasingFunction(): (input: number) => number {
-		if (this._animation.easing.type === 'cubic-bezier') {
-			const { x1, y1, x2, y2 } = this._animation.easing.value;
-			return BezierEasing(x1, y1, x2, y2);
-		} else {
-			return (x) => x;
-		}
-	}
+        if (this.ended) return;
+        this.run();
+    }
 
-	private count() {
-		const { direction } = this._animation;
-		// console.log(`Counting from "${this.from}" to ${this.to}`);
-		console.time(`${this.to}`);
-		console.log(this._animation.duration);
-		const ease = this.getEasingFunction();
-		const granularity = 100;
-		const step = 1 / granularity * ((direction === 'alternate-reverse' || direction === 'reverse') ? -1 : 1);
-		const rate = this._animation.duration / granularity;
-		this.progress = (direction === 'alternate-reverse' || direction === 'reverse') ? 1 : 0;
+    private onEnd() {
+        this.timers.map(timer => clearInterval(timer));
+        if (this.ended) {
+            this.removeIO();
+        }
+    }
 
-		const interval = setInterval(() => {
-			this.progress += step;
-			if (this.progress >= 1) {
-				this.progress = 1;
-				this.end();
-				clearInterval(interval);
-			}
-			this.value = ease(this.progress);
-		}, rate)
-	}
 
-	render() {
-		return <span>{this.format()}</span>;
-	}
+    private run() {
+        if (this.proxy) {
+            const timer = setInterval(() => {
+                this.progress = Number.parseFloat(getComputedStyle(this.proxy).opacity);
+            }, 75);
+            this.timers = [...this.timers, timer];
+        }
+    }
+
+    hostData() {
+        return {
+            class: {
+                'is-paused': !this.intersecting,
+                'did-finish': this.ended
+            }
+        }
+    }
+    render() {
+        const Value = () => {
+            let value: number|string = this._from + ((this._to - this._from) * this.progress);
+            value = this.commas ? commas(Number.parseInt(`${value}`)) : value.toFixed(this.decimals);
+            if (this._pad) {
+                const len = `${this._to}`.length;
+                value = this.commas ? commas(value.padStart(len, '0')) : value.padStart(len, '0');
+            }
+            return <span> {this.prefix}{value}{this.suffix} </span>
+        }
+
+        if (!this.ended) {
+            return [
+                <Value/>,
+                <div class="proxy"></div>
+            ];
+        } else {
+            return (
+                <Value/>
+            )
+        }
+    }
 }
