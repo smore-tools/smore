@@ -1,0 +1,29 @@
+:host {
+    width: 100%;
+    display: flex;
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum";
+}
+.value, .label {
+    margin: 0;
+}
+.group {
+    margin: 0 auto;
+}
+.group:first-of-type {
+    margin-left: 0;
+}
+.group:last-of-type {
+    margin-right: 0;
+}
+
+@supports (display: grid) {
+    :host {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-column-gap: 0.5em;
+    }
+    .group {
+        margin: 0;
+    }
+}
