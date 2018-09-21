@@ -2,6 +2,9 @@
     display: inline-block;
     animation: 3.5s 500ms forwards 1 cubic-bezier(0.23, 1, 0.320, 1);
     animation-play-state: running;
+
+    font-feature-settings: "tnum";
+    font-variant-numeric: tabular-nums;
 }
 
 :host(.is-paused) {

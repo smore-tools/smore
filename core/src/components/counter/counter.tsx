@@ -22,7 +22,7 @@ export class MoCounter {
     @State() _to: number = 0;
     
     @State() progress = 0;
-    @State() timers: any[] = [];
+    @State() timer: number;
 
     @State() prefix: string;
     @State() suffix: string;
@@ -94,13 +94,12 @@ export class MoCounter {
     }
 
     private onStart() {
-
         if (this.ended) return;
         this.run();
     }
 
     private onEnd() {
-        this.timers.map(timer => clearInterval(timer));
+        cancelAnimationFrame(this.timer);
         if (this.ended) {
             this.removeIO();
         }
@@ -109,10 +108,13 @@ export class MoCounter {
 
     private run() {
         if (this.proxy) {
-            const timer = setInterval(() => {
+            const cb = () => {
+                if (this.timer) cancelAnimationFrame(this.timer);
                 this.progress = Number.parseFloat(getComputedStyle(this.proxy).opacity);
-            }, 75);
-            this.timers = [...this.timers, timer];
+                
+                this.timer = requestAnimationFrame(cb);
+            }
+            this.timer = requestAnimationFrame(cb);
         }
     }
 

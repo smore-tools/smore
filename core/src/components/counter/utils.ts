@@ -2,8 +2,9 @@ export function parseInput(input: string) {
     let value: number;
     let decimals: number;
     let commas: boolean;
+
     input = input.trim();
-    let num = input.match(/[\d.,]+/)[0];
+    let num: string = (input.match(/[\d.,]+/)||['0'])[0];
     const [prefix, suffix] = input.split(num);
 
     commas = (num.indexOf(',') > -1);
