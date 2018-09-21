@@ -4,11 +4,12 @@ import { sass } from '@stencil/sass';
 export const config: Config = {
   namespace: 'smore',
   bundles: [
-    { components: ['smore-async-content'] },
     { components: ['smore-counter'] },
-    { components: ['smore-motion-path'] },
+    { components: ['smore-countdown'] },
+    { components: ['smore-async-content'] },
     { components: ['smore-typewriter'] },
     { components: ['smore-window'] },
+    { components: ['smore-observer'] }
   ],
   plugins: [
     sass()

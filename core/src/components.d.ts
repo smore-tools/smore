@@ -25,6 +25,9 @@ declare global {
   interface HTMLAttributes {}
 }
 
+import {
+  ObserverMode,
+} from './components/observer/observer';
 
 declare global {
 
@@ -54,6 +57,41 @@ declare global {
   namespace JSXElements {
     export interface SmoreAsyncContentAttributes extends HTMLAttributes {
 
+    }
+  }
+}
+
+
+declare global {
+
+  namespace StencilComponents {
+    interface SmoreCountdown {
+      'datetime': string;
+      'pad': string;
+    }
+  }
+
+  interface HTMLSmoreCountdownElement extends StencilComponents.SmoreCountdown, HTMLStencilElement {}
+
+  var HTMLSmoreCountdownElement: {
+    prototype: HTMLSmoreCountdownElement;
+    new (): HTMLSmoreCountdownElement;
+  };
+  interface HTMLElementTagNameMap {
+    'smore-countdown': HTMLSmoreCountdownElement;
+  }
+  interface ElementTagNameMap {
+    'smore-countdown': HTMLSmoreCountdownElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      'smore-countdown': JSXElements.SmoreCountdownAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface SmoreCountdownAttributes extends HTMLAttributes {
+      'datetime'?: string;
+      'pad'?: string;
     }
   }
 }
@@ -99,31 +137,37 @@ declare global {
 declare global {
 
   namespace StencilComponents {
-    interface SmoreMotionPath {
-
+    interface SmoreObserver {
+      'granularity': string | number;
+      'mode': ObserverMode;
+      'progress': boolean | 'true' | 'false' | '';
+      'watch': boolean | 'true' | 'false' | '';
     }
   }
 
-  interface HTMLSmoreMotionPathElement extends StencilComponents.SmoreMotionPath, HTMLStencilElement {}
+  interface HTMLSmoreObserverElement extends StencilComponents.SmoreObserver, HTMLStencilElement {}
 
-  var HTMLSmoreMotionPathElement: {
-    prototype: HTMLSmoreMotionPathElement;
-    new (): HTMLSmoreMotionPathElement;
+  var HTMLSmoreObserverElement: {
+    prototype: HTMLSmoreObserverElement;
+    new (): HTMLSmoreObserverElement;
   };
   interface HTMLElementTagNameMap {
-    'smore-motion-path': HTMLSmoreMotionPathElement;
+    'smore-observer': HTMLSmoreObserverElement;
   }
   interface ElementTagNameMap {
-    'smore-motion-path': HTMLSmoreMotionPathElement;
+    'smore-observer': HTMLSmoreObserverElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      'smore-motion-path': JSXElements.SmoreMotionPathAttributes;
+      'smore-observer': JSXElements.SmoreObserverAttributes;
     }
   }
   namespace JSXElements {
-    export interface SmoreMotionPathAttributes extends HTMLAttributes {
-
+    export interface SmoreObserverAttributes extends HTMLAttributes {
+      'granularity'?: string | number;
+      'mode'?: ObserverMode;
+      'progress'?: boolean | 'true' | 'false' | '';
+      'watch'?: boolean | 'true' | 'false' | '';
     }
   }
 }
