@@ -28,6 +28,9 @@ declare global {
 import {
   ObserverMode,
 } from './components/observer/observer';
+import {
+  Flag,
+} from './utils';
 
 declare global {
 
@@ -140,8 +143,8 @@ declare global {
     interface SmoreObserver {
       'granularity': string | number;
       'mode': ObserverMode;
-      'progress': boolean | 'true' | 'false' | '';
-      'watch': boolean | 'true' | 'false' | '';
+      'progress': Flag;
+      'watch': Flag;
     }
   }
 
@@ -166,8 +169,8 @@ declare global {
     export interface SmoreObserverAttributes extends HTMLAttributes {
       'granularity'?: string | number;
       'mode'?: ObserverMode;
-      'progress'?: boolean | 'true' | 'false' | '';
-      'watch'?: boolean | 'true' | 'false' | '';
+      'progress'?: Flag;
+      'watch'?: Flag;
     }
   }
 }

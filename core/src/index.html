@@ -25,8 +25,13 @@
 
         div.spacer {
             height: 100vh;
-            border-top: 4px solid whitesmoke;
+        }
+        div.spacer:first-of-type {
             border-bottom: 4px solid whitesmoke;
+        }
+
+        div.spacer:last-of-type {
+            border-top: 4px solid whitesmoke;
         }
         
         section {
@@ -62,10 +67,15 @@
             opacity: var(--opacity-start);
         }
 
+        .did-exit section {
+            opacity: 0;
+            visibility: hidden;
+        }
+
         .in section {
             --y-start: 25vh;
         }
-        .in[progress].will-enter section {
+        .in[progress].entering section {
             opacity: 1;
             transform: scale(var(--progress, 1));
         }
@@ -78,11 +88,11 @@
             opacity: var(--opacity-end);
             --x-end: 25vw;
         }
-        .out[progress].will-exit section {
+        .out[progress].exiting section {
             opacity: 1;
             transform: scale(var(--progress, 1));
         }
-        .out.will-exit section {
+        .out.exiting section {
             opacity: var(--opacity-start);
             transform: translate(var(--x-end), var(--y-end));
         }
@@ -95,7 +105,7 @@
             opacity: 1;
             transform: translateY(var(--y-end));
         }
-        .in.out.will-exit section {
+        .in.out.exiting section {
             opacity: 0;
             transform: translateX(var(--x-end));
         }
@@ -104,12 +114,28 @@
             transform: scale(var(--progress, 1));
         }
     </style>
+
+    <style>
+        div.container {
+            padding: 1vw;
+            margin: 1vw;
+            height: 50vh;
+            overflow: scroll;
+            border: 1px solid red;
+        }
+        div.container smore-observer {
+            height: 49vh;
+        }
+
+    </style>
 </head>
 
 <body>
     
     <main>
         <div class="spacer"></div>
+
+        <div></div>
 
         <smore-observer class="in in-once" mode="in">
             <section>
@@ -128,7 +154,7 @@
         <smore-observer class="in out" mode="in-out">
             <section>
                 <h1>In then Out</h1>
-                <p>once each</p>
+                <p>once</p>
             </section>
         </smore-observer>
 
@@ -177,6 +203,16 @@
 
         <div class="spacer"></div>
     </main>
+
+    <article>
+        <div class="container">
+            <div class="spacer"></div>
+            <smore-observer mode="in">In</smore-observer>
+            <smore-observer mode="out">Out</smore-observer>
+            <smore-observer mode="in-out">In and Out</smore-observer>
+            <div class="spacer"></div>
+        </div>
+    </article>
 
 </body>
 

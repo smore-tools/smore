@@ -1,5 +1,5 @@
 import { Component, Prop, Element, State, Watch } from '@stencil/core';
-import { toNum } from '../../utils';
+import { toNum, toBool, Flag } from '../../utils';
 
 export type ObserverMode = 'in' | 'out' | 'in-out';
 const modes: string[] = ['in', 'out', 'in-out'];
@@ -39,17 +39,17 @@ export class Observer {
     @Prop() granularity: string | number = 0.25;
     
     @State() shouldProgress: boolean = false;
-    @Prop() progress: boolean | 'true' | 'false' | '' = 'false';
+    @Prop() progress: Flag = 'false';
     @Watch('progress')
     progressChanged() {
-        this.shouldProgress = (this.progress === '' || this.progress === true || this.progress === 'true');
+        this.shouldProgress = toBool(this.progress);
     }
     
     @State() shouldWatch: boolean = false;
-    @Prop() watch: boolean | 'true' | 'false' | '' = 'false';
+    @Prop() watch: Flag = 'false';
     @Watch('watch')
     watchChanged() {
-        this.shouldWatch = (this.watch === '' || this.watch === true || this.watch === 'true');
+        this.shouldWatch = toBool(this.watch);
     }
 
     componentDidLoad() {
@@ -67,18 +67,19 @@ export class Observer {
             this.removeIO();
             const { mode } = this;
             this.io = new IntersectionObserver(([{ isIntersecting, intersectionRatio }]) => {
+                console.log({ intersectionRatio });
                 this.isIntersecting = isIntersecting;
 
                 switch (mode) {
                     case 'in':
                         if (this.shouldWatch) {
-                            if (intersectionRatio === 0) this.didEnter = false;
+                            if (intersectionRatio <= 0.1) this.didEnter = false;
                         }
 
                         if (!this.didEnter) {
                             if (this.shouldProgress) { this.value = intersectionRatio; }
                             this.status = (isIntersecting) ? 'enter' : null;
-                            this.didEnter = (intersectionRatio === 1);
+                            this.didEnter = (intersectionRatio >= 1);
                         }
                         if (this.didEnter) {
                             this.status = null;
@@ -89,13 +90,13 @@ export class Observer {
                     case 'out':
                     case 'in-out':
                         if (this.shouldWatch) {
-                            if (intersectionRatio === 0) this.didEnter = false;
-                            if (intersectionRatio === 1) this.didExit = false;
+                            if (intersectionRatio <= 0.1) this.didEnter = false;
+                            if (intersectionRatio >= 0.9) this.didExit = false;
                         }
                         if (!this.didEnter) {
                             if (this.shouldProgress) { this.value = intersectionRatio; }
                             this.status = (isIntersecting) ? 'enter' : null;
-                            this.didEnter = (intersectionRatio === 1);
+                            this.didEnter = (intersectionRatio >= 1);
                         }
                         if (this.didEnter) {
                             if (!this.didExit) {
@@ -129,9 +130,9 @@ export class Observer {
                 '--progress': (this.shouldProgress) ? this.value : null,
             },
             class: {
-                'will-enter': enters(mode) ? (this.status === 'enter') : false,
+                'entering': enters(mode) ? (this.status === 'enter') : false,
                 'did-enter': enters(mode) ? this.didEnter : false,
-                'will-exit': (this.status === 'exit'),
+                'exiting': (this.status === 'exit'),
                 'did-exit': this.didExit
             }
         }
