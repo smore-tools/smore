@@ -2,7 +2,7 @@ export function hostContext(selector: string, el: HTMLElement): boolean {
     return el.closest(selector) !== null;
 }
 
-export type Flag = boolean | 'true' | 'false' | '';
+export type BooleanAttr<T extends string> = boolean | '' | T;
 
 export function toNum(input: string | number): number {
     if (!input) return 0;
@@ -10,8 +10,12 @@ export function toNum(input: string | number): number {
     return (input.indexOf('.') > -1) ? Number.parseFloat(input) : Number.parseInt(input);
 }
 
-export function toBool(input: Flag): boolean {
-    return (input === true || input === false) ? input : (input === '' || input === 'true');
+export function toBool<T extends string>(input: BooleanAttr<T>, name: T): boolean {
+    if (typeof input === 'boolean') {
+        return input;
+    } else {
+        return (typeof input === 'string' && (input === name || input === ''));
+    }
 }
 
 export function commas(input: number|string) {
