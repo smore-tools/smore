@@ -26,10 +26,7 @@ declare global {
 }
 
 import {
-  ObserverMode,
-} from './components/observer/observer';
-import {
-  Flag,
+  BooleanAttr,
 } from './utils';
 
 declare global {
@@ -140,11 +137,75 @@ declare global {
 declare global {
 
   namespace StencilComponents {
+    interface SmoreGlitchImg {
+
+    }
+  }
+
+  interface HTMLSmoreGlitchImgElement extends StencilComponents.SmoreGlitchImg, HTMLStencilElement {}
+
+  var HTMLSmoreGlitchImgElement: {
+    prototype: HTMLSmoreGlitchImgElement;
+    new (): HTMLSmoreGlitchImgElement;
+  };
+  interface HTMLElementTagNameMap {
+    'smore-glitch-img': HTMLSmoreGlitchImgElement;
+  }
+  interface ElementTagNameMap {
+    'smore-glitch-img': HTMLSmoreGlitchImgElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      'smore-glitch-img': JSXElements.SmoreGlitchImgAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface SmoreGlitchImgAttributes extends HTMLAttributes {
+
+    }
+  }
+}
+
+
+declare global {
+
+  namespace StencilComponents {
+    interface SmoreGlitchText {
+      'theme': 'default'|'rgb'|'cmyk';
+    }
+  }
+
+  interface HTMLSmoreGlitchTextElement extends StencilComponents.SmoreGlitchText, HTMLStencilElement {}
+
+  var HTMLSmoreGlitchTextElement: {
+    prototype: HTMLSmoreGlitchTextElement;
+    new (): HTMLSmoreGlitchTextElement;
+  };
+  interface HTMLElementTagNameMap {
+    'smore-glitch-text': HTMLSmoreGlitchTextElement;
+  }
+  interface ElementTagNameMap {
+    'smore-glitch-text': HTMLSmoreGlitchTextElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      'smore-glitch-text': JSXElements.SmoreGlitchTextAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface SmoreGlitchTextAttributes extends HTMLAttributes {
+      'theme'?: 'default'|'rgb'|'cmyk';
+    }
+  }
+}
+
+
+declare global {
+
+  namespace StencilComponents {
     interface SmoreObserver {
-      'granularity': string | number;
-      'mode': ObserverMode;
-      'progress': Flag;
-      'watch': Flag;
+      'disconnect': BooleanAttr<'disconnect'>;
+      'progress': BooleanAttr<'progress'>;
     }
   }
 
@@ -167,10 +228,8 @@ declare global {
   }
   namespace JSXElements {
     export interface SmoreObserverAttributes extends HTMLAttributes {
-      'granularity'?: string | number;
-      'mode'?: ObserverMode;
-      'progress'?: Flag;
-      'watch'?: Flag;
+      'disconnect'?: BooleanAttr<'disconnect'>;
+      'progress'?: BooleanAttr<'progress'>;
     }
   }
 }
