@@ -1,3 +1,7 @@
 :host {
     display: block;
 }
+
+:host([progress]) {
+    transition: all 75ms linear;
+}
