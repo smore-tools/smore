@@ -1,0 +1,40 @@
+{
+  "name": "@smore/directives",
+  "version": "0.0.1-alpha.0",
+  "description": "Functional component directives for Stencil",
+  "module": "dist/esm/index.js",
+  "main": "dist/index.js",
+  "types": "dist/types/index.d.ts",
+  "files": [
+    "dist/esm",
+    "dist/types",
+    "dist/index.js"
+  ],
+  "scripts": {
+    "prebuild": "rm -rf dist",
+    "build": "npm run transpile && npm run bundle && npm run bundle:cjs",
+    "transpile": "tsc -p .",
+    "bundle": "rollup dist/src/index.js --format esm --file dist/esm/index.js",
+    "bundle:cjs": "rollup dist/src/index.js --format cjs --file dist/index.js",
+    "release": "np"
+  },
+  "devDependencies": {
+    "@stencil/core": "0.16.1",
+    "np": "^3.1.0",
+    "rollup": "^1.0.1",
+    "typescript": "3.2.2"
+  },
+  "peerDependencies": {
+    "@stencil/core": "0.16.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/smore-tools/smore.git"
+  },
+  "author": "Nate Moore",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/smore-tools/smore"
+  },
+  "homepage": "https://smore.tools"
+}
